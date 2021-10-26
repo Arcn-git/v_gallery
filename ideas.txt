@@ -1,0 +1,3 @@
+(let user rate the validity of tags/ limit possible tags for the single piece of art)
+(showrooms ambience a product of the displayed artpieces)
+(collaborations: combine painting with song)
