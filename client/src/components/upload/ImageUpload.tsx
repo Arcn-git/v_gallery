@@ -7,14 +7,8 @@ import axios from 'axios';
 const ImageUpload = () => {
 
     const [selectedFile, setSelectedFile] = useState<File>();
-    const [fileInputState, setFileInputState] = useState('');
-    const [previewSource, setPreviewSource] = useState<any | null>('');
-
-    /* const changeHandler = (event:any) => {
-        const file = event.target.files[0];
-        console.log(file.type);
-        previewFile(file);
-    }; */
+    const [previewSource, setPreviewSource] = useState<any | null>();
+    
     const changeHandler = (event:React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files === null) {
             return null;
@@ -64,7 +58,6 @@ const ImageUpload = () => {
             type="file"
             name="image"
             onChange={changeHandler}
-            value={fileInputState}
             />
             <button>Submit</button>
         </form>
