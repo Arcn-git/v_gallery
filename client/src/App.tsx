@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import ImageUpload from './upload/ImageUpload';
+import ImageUpload from './components/upload/ImageUpload';
 
 const App = () => {
   return <div> 

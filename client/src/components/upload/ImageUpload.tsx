@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import axios from 'axios';
 
-
-
 // TODO Only accept png, jpeg, jpg files. Need to validate this in frontend AND in Backend
 // TODO Currently it says no file selected when selecting a file. Fix it.
+// TODO Add storybook and style this component
 const ImageUpload = () => {
 
     const [selectedFile, setSelectedFile] = useState<File>();
