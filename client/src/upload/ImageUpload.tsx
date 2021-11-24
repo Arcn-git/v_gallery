@@ -1,23 +1,55 @@
 import React, { useState } from "react";
 import axios from 'axios';
 
+
+
+// TODO Only accept png, jpeg, jpg files. Need to validate this in frontend AND in Backend
+// TODO Currently it says no file selected when selecting a file. Fix it.
 const ImageUpload = () => {
 
-    const [selectedFile, setSelectedFile] = useState('');
+    const [selectedFile, setSelectedFile] = useState<File>();
     const [fileInputState, setFileInputState] = useState('');
     const [previewSource, setPreviewSource] = useState<any | null>('');
 
-    const changeHandler = (event:any) => {
+    /* const changeHandler = (event:any) => {
         const file = event.target.files[0];
+        console.log(file.type);
+        previewFile(file);
+    }; */
+    const changeHandler = (event:React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files === null) {
+            return null;
+        }
+        const file = event.target.files[0];
+        setSelectedFile(file);
         previewFile(file);
     };
 
-    const handleSubmit = (e:any) => {
+    const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!selectedFile) return;
+        uploadImage(selectedFile);
     };
 
-    const previewFile = (file:any) => {
+    const uploadImage = (file:File) => {
+        let encodedFile: (string | ArrayBuffer | null) = '';
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = async () => {
+            // now the reader.result is the image in a base64 encoded string
+            encodedFile = reader.result;
+            console.log("encodedFile: ", encodedFile);
+            // Post request to the ArtService
+            await axios.post('http://localhost:7001/uplFile', {
+                encodedFile
+            });
+        }
+        // Reset the states after POST to service
+        setPreviewSource('');
+        setSelectedFile(undefined);
+    };
+
+    const previewFile = (file:File) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
@@ -37,9 +69,20 @@ const ImageUpload = () => {
             />
             <button>Submit</button>
         </form>
+        <div>
         {previewSource && (
             <img src={previewSource} alt="chosen" style={{height:'300px'}} />
         )}
+        {selectedFile && (
+            <div className="name">File name: {selectedFile.name}</div>
+        )}
+        {selectedFile && (
+            <div className="type">File type: {selectedFile.type}</div>
+        )}
+        {selectedFile && (
+            <div className="size">File size (in bytes): {selectedFile.size}</div>
+        )}
+        </div>
     </div>
 }
 
