@@ -33,7 +33,7 @@ const ImageUpload = () => {
             encodedFile = reader.result;
             console.log("encodedFile: ", encodedFile);
             // Post request to the ArtService
-            await axios.post('http://localhost:7001/uplFile', {
+            await axios.post('http://localhost:7001/uplImage', {
                 encodedFile
             });
         }
