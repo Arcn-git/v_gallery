@@ -2,6 +2,7 @@ import * as React from "react";
 import {
   Link,
   Links,
+  LinksFunction,
   LiveReload,
   Meta,
   Outlet,
@@ -10,6 +11,7 @@ import {
   useCatch,
   useLocation
 } from "remix";
+import globalCss from "~/styles/global.css";
 
 /**
  * The `links` export is a function that returns an array of objects that map to
@@ -19,6 +21,13 @@ import {
  *
  * https://remix.run/api/app#links
  */
+ export let links: LinksFunction = () => {
+  return [
+      {
+        rel: 'stylesheet', href: globalCss
+      }
+    ]
+}
 
 /**
  * The root module's default export is a component that renders the current
@@ -34,6 +43,7 @@ export default function App() {
     </Document>
   );
 }
+
 
 function Document({
   children,
@@ -61,6 +71,8 @@ function Document({
     </html>
   );
 }
+
+
 
 function Layout({ children }: React.PropsWithChildren<{}>) {
   return (
